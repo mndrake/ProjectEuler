@@ -4,17 +4,17 @@
 // --------------------------------------------------------------------------------------
 
 // Binaries that have XML documentation (in a corresponding generated XML file)
-let referenceBinaries = [ "FSharp.ProjectTemplate.dll" ]
+//let referenceBinaries = [ "FSharp.ProjectTemplate.dll" ]
 // Web site location for the generated documentation
-let website = "/FSharp.ProjectScaffold"
+let website = "/ProjectEuler"
 
 // Specify more information about your project
 let info =
-  [ "project-name", "FSharp.ProjectScaffold"
-    "project-author", "Your Name"
+  [ "project-name", "ProjectEuler"
+    "project-author", ""
     "project-summary", "A short summary of your project"
-    "project-github", "http://github.com/fsprojects/FSharp.ProjectScaffold"
-    "project-nuget", "http://nuget.com/packages/FSharp.ProjectScaffold" ]
+    "project-github", "http://github.com/mndrake/ProjectEuler"
+    "project-nuget", "" ]
 
 // --------------------------------------------------------------------------------------
 // For typical project, no changes are needed below
@@ -63,14 +63,6 @@ let copyFiles () =
   CopyRecursive (formatting @@ "styles") (output @@ "content") true 
     |> Log "Copying styles and scripts: "
 
-// Build API reference from XML comments
-let buildReference () =
-  CleanDir (output @@ "reference")
-  for lib in referenceBinaries do
-    MetadataFormat.Generate
-      ( bin @@ lib, output @@ "reference", layoutRoots, 
-        parameters = ("root", root)::info )
-
 // Build documentation from `fsx` and `md` files in `docs/content`
 let buildDocumentation () =
   let subdirs = Directory.EnumerateDirectories(content, "*", SearchOption.AllDirectories)
@@ -83,4 +75,3 @@ let buildDocumentation () =
 // Generate
 copyFiles()
 buildDocumentation()
-buildReference()

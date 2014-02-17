@@ -21,52 +21,48 @@ open System
 
 // The name of the project 
 // (used by attributes in AssemblyInfo, name of a NuGet package and directory in 'src')
-let project = "FSharp.ProjectTemplate"
+let project = "ProjectEuler"
 
 // Short summary of the project
 // (used as description in AssemblyInfo and as a short summary for NuGet package)
-let summary = "A short summary of your project."
+let summary = "Project Euler solutions in F#"
 
 // Longer description of the project
 // (used as a description for NuGet package; line breaks are automatically cleaned up)
-let description = """
-  A lengthy description of your project. 
-  This can have multiple lines and will be cleaned up. """
+let description = """Project Euler solutions in F#"""
 // List of author names (for NuGet package)
-let authors = [ "Your Name" ]
+let authors = [ "" ]
 // Tags for your project (for NuGet package)
-let tags = "F# fsharp tags which describe your project"
+let tags = "F#"
 
 // File system information 
 // (<solutionFile>.sln is built during the building process)
-let solutionFile  = "FSharp.ProjectScaffold"
-// Pattern specifying assemblies to be tested using NUnit
-let testAssemblies = "tests/*/bin/*/FSharp.ProjectTemplate*Tests*.dll"
+let solutionFile  = "ProjectEuler"
 
 // Git configuration (used for publishing documentation in gh-pages branch)
 // The profile where the project is posted 
-let gitHome = "https://github.com/fsprojects"
+let gitHome = "https://github.com/mndrake"
 // The name of the project on GitHub
-let gitName = "FSharp.ProjectScaffold"
+let gitName = "ProjectEuler"
 
-// --------------------------------------------------------------------------------------
-// END TODO: The rest of the file includes standard build steps 
-// --------------------------------------------------------------------------------------
-
-// Read additional information from the release notes document
-Environment.CurrentDirectory <- __SOURCE_DIRECTORY__
-let release = parseReleaseNotes (IO.File.ReadAllLines "RELEASE_NOTES.md")
-
-// Generate assembly info files with the right version & up-to-date information
-Target "AssemblyInfo" (fun _ ->
-  let fileName = "src/" + project + "/AssemblyInfo.fs"
-  CreateFSharpAssemblyInfo fileName
-      [ Attribute.Title project
-        Attribute.Product project
-        Attribute.Description summary
-        Attribute.Version release.AssemblyVersion
-        Attribute.FileVersion release.AssemblyVersion ] 
-)
+//// --------------------------------------------------------------------------------------
+//// END TODO: The rest of the file includes standard build steps 
+//// --------------------------------------------------------------------------------------
+//
+//// Read additional information from the release notes document
+//Environment.CurrentDirectory <- __SOURCE_DIRECTORY__
+//let release = parseReleaseNotes (IO.File.ReadAllLines "RELEASE_NOTES.md")
+//
+//// Generate assembly info files with the right version & up-to-date information
+//Target "AssemblyInfo" (fun _ ->
+//  let fileName = "src/" + project + "/AssemblyInfo.fs"
+//  CreateFSharpAssemblyInfo fileName
+//      [ Attribute.Title project
+//        Attribute.Product project
+//        Attribute.Description summary
+//        Attribute.Version release.AssemblyVersion
+//        Attribute.FileVersion release.AssemblyVersion ] 
+//)
 
 // --------------------------------------------------------------------------------------
 // Clean build results & restore NuGet packages
@@ -81,46 +77,46 @@ Target "CleanDocs" (fun _ ->
     CleanDirs ["docs/output"]
 )
 
-// --------------------------------------------------------------------------------------
-// Build library & test project
+//// --------------------------------------------------------------------------------------
+//// Build library & test project
+//
+//Target "Build" (fun _ ->
+//    !! (solutionFile + "*.sln")
+//    |> MSBuildRelease "" "Rebuild"
+//    |> ignore
+//)
 
-Target "Build" (fun _ ->
-    !! (solutionFile + "*.sln")
-    |> MSBuildRelease "" "Rebuild"
-    |> ignore
-)
+//// --------------------------------------------------------------------------------------
+//// Run the unit tests using test runner
+//
+//Target "RunTests" (fun _ ->
+//    !! testAssemblies 
+//    |> NUnit (fun p ->
+//        { p with
+//            DisableShadowCopy = true
+//            TimeOut = TimeSpan.FromMinutes 20.
+//            OutputFile = "TestResults.xml" })
+//)
 
-// --------------------------------------------------------------------------------------
-// Run the unit tests using test runner
-
-Target "RunTests" (fun _ ->
-    !! testAssemblies 
-    |> NUnit (fun p ->
-        { p with
-            DisableShadowCopy = true
-            TimeOut = TimeSpan.FromMinutes 20.
-            OutputFile = "TestResults.xml" })
-)
-
-// --------------------------------------------------------------------------------------
-// Build a NuGet package
-
-Target "NuGet" (fun _ ->
-    NuGet (fun p -> 
-        { p with   
-            Authors = authors
-            Project = project
-            Summary = summary
-            Description = description
-            Version = release.NugetVersion
-            ReleaseNotes = String.Join(Environment.NewLine, release.Notes)
-            Tags = tags
-            OutputPath = "bin"
-            AccessKey = getBuildParamOrDefault "nugetkey" ""
-            Publish = hasBuildParam "nugetkey"
-            Dependencies = [] })
-        ("nuget/" + project + ".nuspec")
-)
+//// --------------------------------------------------------------------------------------
+//// Build a NuGet package
+//
+//Target "NuGet" (fun _ ->
+//    NuGet (fun p -> 
+//        { p with   
+//            Authors = authors
+//            Project = project
+//            Summary = summary
+//            Description = description
+//            Version = release.NugetVersion
+//            ReleaseNotes = String.Join(Environment.NewLine, release.Notes)
+//            Tags = tags
+//            OutputPath = "bin"
+//            AccessKey = getBuildParamOrDefault "nugetkey" ""
+//            Publish = hasBuildParam "nugetkey"
+//            Dependencies = [] })
+//        ("nuget/" + project + ".nuspec")
+//)
 
 // --------------------------------------------------------------------------------------
 // Generate the documentation
@@ -140,7 +136,7 @@ Target "ReleaseDocs" (fun _ ->
     fullclean tempDocsDir
     CopyRecursive "docs/output" tempDocsDir true |> tracefn "%A"
     StageAll tempDocsDir
-    Commit tempDocsDir (sprintf "Update generated documentation for version %s" release.NugetVersion)
+    Commit tempDocsDir (sprintf "Update generated documentation") // for version %s" release.NugetVersion)
     Branches.push tempDocsDir
 )
 
