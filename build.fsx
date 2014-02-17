@@ -77,6 +77,8 @@ Target "CleanDocs" (fun _ ->
     CleanDirs ["docs/output"]
 )
 
+
+
 //// --------------------------------------------------------------------------------------
 //// Build library & test project
 //
@@ -125,6 +127,25 @@ Target "GenerateDocs" (fun _ ->
     executeFSIWithArgs "docs/tools" "generate.fsx" ["--define:RELEASE"] [] |> ignore
 )
 
+Target "GenerateNotebooks" (fun _ -> 
+    !! "docs/nb/*.ipynb"
+    |> FileHelper.CopyFiles ("docs/content/")
+
+    !! "docs/content/*.ipynb"
+    |> Seq.iter (fun f ->
+        let result = ExecProcess (fun info ->
+                info.FileName <- "ipython" 
+                info.WorkingDirectory <- __SOURCE_DIRECTORY__ + "/docs/content"
+                info.Arguments <- 
+                    ("nbconvert --profile ifsharp --to markdown " + f)) (TimeSpan.FromMinutes 5.0)
+
+        if result <> 0 then failwithf "MyProc.exe returned with a non-zero exit code"
+    )
+
+    !! "docs/content/*.ipynb"
+    |> FileHelper.DeleteFiles
+
+)
 // --------------------------------------------------------------------------------------
 // Release Scripts
 
