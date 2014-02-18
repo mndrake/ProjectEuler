@@ -7,3 +7,5 @@ F# Project Euler Solutions
 
 [1 - 20](http://nbviewer.ipython.org/github/mndrake/ProjectEuler/blob/master/notebooks/euler_1_20.ipynb)
 
+[21-30] (http://nbviewer.ipython.org/github/mndrake/ProjectEuler/blob/master/notebooks/euler_21_30.ipynb)
+
