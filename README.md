@@ -5,7 +5,9 @@ F# Project Euler Solutions
 
 [IFSharp Sample (aka F# IPython Notebook)](http://nbviewer.ipython.org/github/mndrake/ProjectEuler/blob/master/notebooks/feature_notebook.ipynb)
 
-[1 - 20](http://nbviewer.ipython.org/github/mndrake/ProjectEuler/blob/master/notebooks/euler_1_20.ipynb)
-
-[21-30] (http://nbviewer.ipython.org/github/mndrake/ProjectEuler/blob/master/notebooks/euler_21_30.ipynb)
+[001 - 010](http://nbviewer.ipython.org/github/mndrake/ProjectEuler/blob/master/notebooks/euler_001_010.ipynb)  
+[011 - 020](http://nbviewer.ipython.org/github/mndrake/ProjectEuler/blob/master/notebooks/euler_011_020.ipynb)  
+[021 - 030](http://nbviewer.ipython.org/github/mndrake/ProjectEuler/blob/master/notebooks/euler_021_030.ipynb)  
+[031 - 040](http://nbviewer.ipython.org/github/mndrake/ProjectEuler/blob/master/notebooks/euler_031_040.ipynb)  
+[041 - 050](http://nbviewer.ipython.org/github/mndrake/ProjectEuler/blob/master/notebooks/euler_041_050.ipynb)  
 
