@@ -1,0 +1,1 @@
+ipython nbconvert %1 --profile ifsharp --to slides --post serve
