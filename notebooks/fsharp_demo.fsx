@@ -1,8 +1,10 @@
 #I "C:/Program Files/BayardRock/IFSharp/lib"
-#r "FSharp.Data.dll"
+#I "C:/Program Files/BayardRock/IFSharp/src"
+#load "Euler.fs"
+open Euler
 
-open FSharp.Data
+let p() =
+    let rec loop n = function |1->n |k->bigint.ModPow(n,loop n (k-1),100000000I)
+    loop 1777I 1855
 
-let wb = WorldBankData.GetDataContext()
-
-wb.Countries
+Euler.Timer(p)
